@@ -1,0 +1,66 @@
+import java.util.HashMap;
+import java.util.Map;
+
+public class BannerGenerator {
+
+    // Using a HashMap for O(1) retrieval of patterns
+    private static final Map<Character, String[]> patternMap = new HashMap<>();
+
+    static {
+        initializePatterns();
+    }
+
+    /**
+     * UC8 Requirement: Use a HashMap to store ASCII art patterns.
+     * Encapsulates the data initialization.
+     */
+    private static void initializePatterns() {
+        patternMap.put('O', new String[]{
+            "  *** ",
+            " * * ",
+            " * * ",
+            " * * ",
+            "  *** "
+        });
+        patternMap.put('P', new String[]{
+            " **** ",
+            " * * ",
+            " **** ",
+            " * ",
+            " * "
+        });
+        patternMap.put('S', new String[]{
+            "  **** ",
+            " * ",
+            "  *** ",
+            "     * ",
+            " **** "
+        });
+    }
+
+    /**
+     * UC8 Requirement: Modular method to display the banner.
+     * Uses nested loops and StringBuilder for efficiency.
+     */
+    public static void displayBanner(String word) {
+        word = word.toUpperCase();
+        int rowCount = 5; // Standard height for our patterns
+
+        for (int i = 0; i < rowCount; i++) {
+            StringBuilder rowBuilder = new StringBuilder();
+            
+            for (char c : word.toCharArray()) {
+                if (patternMap.containsKey(c)) {
+                    // Retrieve pattern and append the specific row for this character
+                    rowBuilder.append(patternMap.get(c)[i]).append("  ");
+                }
+            }
+            System.out.println(rowBuilder.toString());
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("--- UC8: HashMap-Based Banner System ---");
+        displayBanner("OOPS");
+    }
+}
